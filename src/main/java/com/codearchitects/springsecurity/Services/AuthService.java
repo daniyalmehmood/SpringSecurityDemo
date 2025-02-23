@@ -36,7 +36,7 @@ public class AuthService {
         return jwtUtil.generateToken(user.getUserName(), user.getEmail(), user.getRole().name());
     }
     public void signUp(SignUpRequestDTO dto) throws Exception {
-        if (userRepository.findByUserName(dto.getUserName()) == null) {
+        if (userRepository.findByUserName(dto.getUserName()) != null) {
             throw new Exception("Username already exists");
         }
         if (userRepository.existsByEmail(dto.getEmail())) {
