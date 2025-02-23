@@ -43,12 +43,19 @@ public class AuthService {
             throw new Exception("Email already exists");
         }
 
-        userRepository.save(
+        User user = new User();
+        user.setEmail(dto.getEmail());
+        user.setUserName(dto.getUserName());
+        user.setRole(dto.getRole());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        userRepository.save(user);
+
+      /*  userRepository.save(
                 User.builder()
                         .email(dto.getEmail())
                         .password(passwordEncoder.encode(dto.getPassword()))
                         .role(dto.getRole())
                         .userName(dto.getUserName()).build()
-        );
+        );*/
     }
 }
