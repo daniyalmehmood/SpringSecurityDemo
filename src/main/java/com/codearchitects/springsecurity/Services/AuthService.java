@@ -1,7 +1,7 @@
 package com.codearchitects.springsecurity.Services;
 
 
-import com.codearchitects.springsecurity.Configs.UserRepository;
+import com.codearchitects.springsecurity.Repositories.UserRepository;
 import com.codearchitects.springsecurity.DTOs.SignInRequestDTO;
 import com.codearchitects.springsecurity.DTOs.SignUpRequestDTO;
 import com.codearchitects.springsecurity.Models.User;

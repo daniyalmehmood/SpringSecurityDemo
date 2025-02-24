@@ -1,4 +1,4 @@
-package com.codearchitects.springsecurity.Configs;
+package com.codearchitects.springsecurity.Repositories;
 
 import com.codearchitects.springsecurity.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
