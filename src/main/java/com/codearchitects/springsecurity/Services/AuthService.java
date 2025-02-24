@@ -1,6 +1,8 @@
 package com.codearchitects.springsecurity.Services;
 
 
+import com.codearchitects.springsecurity.Exceptions.InvalidCredentialsException;
+import com.codearchitects.springsecurity.Exceptions.UserAlreadyExistsException;
 import com.codearchitects.springsecurity.Repositories.UserRepository;
 import com.codearchitects.springsecurity.DTOs.SignInRequestDTO;
 import com.codearchitects.springsecurity.DTOs.SignUpRequestDTO;
@@ -27,20 +29,24 @@ public class AuthService {
     public String signIn(SignInRequestDTO dto) throws Exception {
         // Find user by username
         User user = userRepository.findByUserName(dto.getUserName());
+        if (user == null) {
+            throw new InvalidCredentialsException("Invalid username or password");
+        }
         // Check password match
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new Exception("Invalid username or password");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
         // Generate JWT token
         return jwtUtil.generateToken(user.getUserName(), user.getEmail(), user.getRole().name());
     }
+
     public void signUp(SignUpRequestDTO dto) throws Exception {
         if (userRepository.findByUserName(dto.getUserName()) != null) {
-            throw new Exception("Username already exists");
+            throw new UserAlreadyExistsException("Username already exists");
         }
         if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new Exception("Email already exists");
+            throw new UserAlreadyExistsException("Email already exists");
         }
 
         User user = new User();
@@ -50,12 +56,5 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         userRepository.save(user);
 
-      /*  userRepository.save(
-                User.builder()
-                        .email(dto.getEmail())
-                        .password(passwordEncoder.encode(dto.getPassword()))
-                        .role(dto.getRole())
-                        .userName(dto.getUserName()).build()
-        );*/
     }
 }
