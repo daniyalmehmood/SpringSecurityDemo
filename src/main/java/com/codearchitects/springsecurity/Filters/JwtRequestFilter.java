@@ -1,5 +1,6 @@
 package com.codearchitects.springsecurity.Filters;
 
+import com.codearchitects.springsecurity.Services.UserService;
 import com.codearchitects.springsecurity.Utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,7 +24,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userDetailsService;
 
 
     /*@Override
